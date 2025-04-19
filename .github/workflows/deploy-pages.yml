@@ -34,9 +34,6 @@ jobs:
           name: placeholder
           path: ./index.html
 
-        with:
-          path: ./
-
       - name: Deploy to GitHub Pages
         id: deployment
 
