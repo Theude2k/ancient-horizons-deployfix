@@ -1,14 +1,12 @@
-name: Deploy Pages – Fresh Trigger
+name: Deploy to GitHub Pages
 
 on:
   push:
-    paths:
-      - '**.html'
-      - '**.yml'
-      - '**.md'
+    branches:
+      - main
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -17,7 +15,6 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -28,18 +25,9 @@ jobs:
 
       - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v2
-      - name: Temporary patch – install upload-artifact
-        uses: actions/upload-artifact@v3
         with:
-          name: placeholder
-          path: ./index.html
+          path: ./  # path to your built files (e.g., ./dist or ./public)
 
       - name: Deploy to GitHub Pages
         id: deployment
-
- - name: Temporary patch – install upload-artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: placeholder
-          path: ./index.html        uses: actions/deploy-pages@v2
-
+        uses: actions/deploy-pages@v2
